@@ -30,7 +30,7 @@ export default function BackgroundMusic() {
 
   return (
     <div className={styles.playerSpace}>
-      <audio ref={audioRef} src="/peaky_blinders_music.mp3" preload="auto" loop hidden />
+      <audio ref={audioRef} src="/peaky_blinders_music.mp3" autoPlay preload="auto" loop hidden />
       <button
         ref={buttonRef}
         type="button"
