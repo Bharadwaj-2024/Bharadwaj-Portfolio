@@ -250,7 +250,7 @@ export default function Home() {
             <a className="email" href="mailto:bharadwajbhadraroy@gmail.com">bharadwajbhadraroy@gmail.com <Arrow /></a>
             <div className="contact-links">
               <a href="https://github.com/Bharadwaj-2024/" target="_blank" rel="noopener noreferrer" aria-label="GitHub (opens in a new tab)">GitHub <span aria-hidden="true">↗</span></a>
-              <a href="https://www.linkedin.com/in/bharadwaj-bhadra-roy-526927325/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn (opens in a new tab)">LinkedIn <span aria-hidden="true">↗</span></a>
+              <a href="https://www.linkedin.com/in/bhadradwaj-bhadra-roy-526927325/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn (opens in a new tab)">LinkedIn <span aria-hidden="true">↗</span></a>
               <a href="https://x.com/BhadraBsr" target="_blank" rel="noopener noreferrer" aria-label="X (opens in a new tab)">X <span aria-hidden="true">↗</span></a>
             </div>
           </div>
