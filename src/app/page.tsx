@@ -1,7 +1,9 @@
 "use client";
 
 import Image from "next/image";
+import Link from "next/link";
 import { useEffect, useState } from "react";
+import ProjectGallery from "@/components/project-gallery";
 
 const navItems = [
   ["My story", "story"],
@@ -12,30 +14,6 @@ const navItems = [
 ];
 
 const S = { fill: "none", stroke: "currentColor", strokeWidth: 3, strokeLinecap: "round", strokeLinejoin: "round" } as const;
-
-const EyeIcon = () => (
-  <svg viewBox="0 0 64 64" aria-hidden="true">
-    <path d="M8 32c8-12 15-18 24-18s16 6 24 18c-8 12-15 18-24 18S16 44 8 32z" {...S} />
-    <circle cx="32" cy="32" r="8" {...S} />
-    <path d="M32 32h.01" {...S} />
-    <path d="M6 12h10M6 12v8M58 12H48M58 12v8M6 52h10M6 52v-8M58 52H48M58 52v-8" {...S} />
-  </svg>
-);
-
-const PrinterIcon = () => (
-  <svg viewBox="0 0 64 64" aria-hidden="true">
-    <path d="M20 12h24v10H20z" {...S} />
-    <path d="M14 26h36v16H14z" {...S} />
-    <path d="M20 42v10h24V42" {...S} />
-    <path d="M44 34h.01" {...S} />
-  </svg>
-);
-
-const BoltIcon = () => (
-  <svg viewBox="0 0 64 64" aria-hidden="true">
-    <path d="M30 6L14 34h13l-6 24 23-30H31l6-22z" {...S} />
-  </svg>
-);
 
 const MonitorIcon = () => (
   <svg viewBox="0 0 64 64" aria-hidden="true">
@@ -95,35 +73,13 @@ const FingerprintIcon = () => (
   </svg>
 );
 
-const projects = [
-  {
-    name: "Deepfake Detection",
-    type: "AI / Full stack",
-    description: "AI video analysis using a ResNeXt CNN and LSTM pipeline, delivered through a full-stack MERN application.",
-    tags: ["Python", "React", "Node.js", "Docker"],
-    Icon: EyeIcon,
-  },
-  {
-    name: "FlashPrint",
-    type: "Product / Platform",
-    description: "A campus printing platform with uploads, live order tracking, role-based access, and an administrative dashboard.",
-    tags: ["Next.js", "TypeScript", "PostgreSQL"],
-    Icon: PrinterIcon,
-  },
-  {
-    name: "MockMaster AI",
-    type: "Developer tooling",
-    description: "An AI-powered REST API and realistic mock-data generator that earned third place at the OVERCLKOCCK Hackathon.",
-    tags: ["JavaScript", "REST API", "AI"],
-    Icon: BoltIcon,
-  },
-];
+const coreStack = ["React", "Next.js", "TypeScript", "JavaScript", "HTML", "Modern CSS"];
 
-const skills = [
-  { title: "Frontend", text: "React, Next.js, TypeScript, JavaScript, HTML and modern CSS.", Icon: MonitorIcon },
-  { title: "Backend", text: "Node.js, Express, REST APIs, PostgreSQL and MongoDB.", Icon: ServerIcon },
-  { title: "AI & Data", text: "Python, machine learning, CNN/LSTM workflows and data analysis.", Icon: ChipIcon },
-  { title: "Tools", text: "Git, Docker, Figma, Linux and collaborative product development.", Icon: SlidersIcon },
+const skills: { title: string; text: string; tags: string[]; featured?: boolean; Icon: typeof MonitorIcon }[] = [
+  { title: "Frontend", text: "Interfaces that feel instant, accessible and pixel-precise.", tags: coreStack, featured: true, Icon: MonitorIcon },
+  { title: "Backend", text: "APIs and data layers built to hold under real pressure.", tags: ["Node.js", "Express", "REST APIs", "PostgreSQL", "MongoDB"], Icon: ServerIcon },
+  { title: "AI & Data", text: "Applied machine learning, from notebook to product.", tags: ["Python", "Machine Learning", "CNN / LSTM", "Data Analysis"], Icon: ChipIcon },
+  { title: "Tools", text: "The workflow that keeps research, build and shipping smooth.", tags: ["Git", "Docker", "Figma", "Linux"], Icon: SlidersIcon },
 ];
 
 const Arrow = () => (
@@ -133,15 +89,8 @@ const Arrow = () => (
 );
 
 const Seal = ({ small = false }: { small?: boolean }) => (
-  <div className={`seal${small ? " seal-small" : ""}`} aria-label="By order of Bharadwaj seal">
-    <svg viewBox="0 0 180 180" role="img" aria-hidden="true">
-      <defs><path id={small ? "sealPathSmall" : "sealPath"} d="M 24,90 A 66,66 0 1,1 156,90 A 66,66 0 1,1 24,90" /></defs>
-      <circle cx="90" cy="90" r="83" /><circle cx="90" cy="90" r="69" /><circle cx="90" cy="90" r="47" />
-      <text><textPath href={`#${small ? "sealPathSmall" : "sealPath"}`} startOffset="2%">BY ORDER OF THE · BY ORDER OF THE · </textPath></text>
-      <path className="seal-figure" d="M54 132c5-25 17-35 28-39l-5-8c-3-4-3-10-1-15l2-8c2-10 9-16 20-16 13 0 21 8 22 21l-2 16-7 11c12 5 23 17 27 38zM68 60c10-13 35-17 52-7l-4 9H78z" />
-      <path className="seal-tie" d="M86 98h9l4 24-9 10-8-10z" />
-      <text className="seal-year" x="90" y="151">EST. 2024</text>
-    </svg>
+  <div className={`seal${small ? " seal-small" : ""}`} role="img" aria-label="By order of Bharadwaj seal">
+    <Image src="/stamp.jpeg" alt="" fill sizes="(max-width: 700px) 30vw, 13rem" />
   </div>
 );
 
@@ -149,8 +98,8 @@ function Loader({ leaving }: { leaving: boolean }) {
   return (
     <div className={`loader${leaving ? " loader-leaving" : ""}`} aria-hidden="true">
       <div className="loader-grain" />
-      <p>By order of the</p>
-      <div className="loader-title"><span>BHARADWAJ&apos;S</span><strong>PORTFOLIO</strong></div>
+      <p>By order of</p>
+      <div className="loader-title"><span>BHARADWAJ</span></div>
       <div className="loader-rule"><i /></div>
       <small>Bengaluru · MMXXVI</small>
     </div>
@@ -167,8 +116,7 @@ export default function Home() {
       (entries) => entries.forEach((entry) => entry.isIntersecting && entry.target.classList.add("is-visible")),
       { threshold: 0.14 },
     );
-    const elements = document.querySelectorAll(".reveal");
-    elements.forEach((element) => observer.observe(element));
+    document.querySelectorAll(".reveal").forEach((element) => observer.observe(element));
     return () => {
       window.clearTimeout(leaveTimer);
       window.clearTimeout(hideTimer);
@@ -182,7 +130,7 @@ export default function Home() {
       <a className="skip-link" href="#main-content">Skip to content</a>
 
       <header className="site-header">
-        <a className="brand" href="#home" aria-label="Bharadwaj home"><b>BR</b><span>Est. 2024</span></a>
+        <a className="brand" href="#home" aria-label="BBR — Bharadwaj home"><b>BB<i>R</i></b><span>Est. 2024</span></a>
         <nav aria-label="Primary navigation">
           {navItems.map(([label, id]) => <a key={id} href={`#${id}`}>{label}</a>)}
         </nav>
@@ -192,11 +140,11 @@ export default function Home() {
       <section className="hero" id="home" aria-labelledby="hero-title">
         <Image className="hero-image" src="/thomas-shelby-hero.jpg" alt="A sharply dressed man in a cap walking with purpose" fill priority sizes="100vw" />
         <div className="hero-shade" /><div className="grain" aria-hidden="true" />
-        <p className="hero-topline"><span>Bengaluru, India</span><b>Portfolio · MMXXVI</b><span>CS Engineer</span></p>
+        <p className="hero-topline"><span>Bengaluru, India</span><b>Portfolio · MMXXVI</b><span>Developer &amp; Entrepreneur</span></p>
         <div className="hero-copy" id="main-content">
-          <p className="eyebrow light">Engineer · Builder · Problem solver</p>
+          <p className="eyebrow light">Developer · Entrepreneur · Problem solver</p>
           <h1 id="hero-title"><span>Bharadwaj</span><strong>B R</strong></h1>
-          <p className="hero-statement">I turn ambitious ideas into intelligent, dependable digital products.</p>
+          <p className="hero-statement">I speak two languages fluently — the language of business, and the language that runs underneath it. Most men only know one.</p>
           <div className="hero-actions">
             <a className="button paper-button" href="#projects">Inspect my work <Arrow /></a>
             <a className="text-link light-link" href="#story">Read my story <span>↓</span></a>
@@ -210,14 +158,16 @@ export default function Home() {
         <div className="section-index">My story <span>Personal dossier</span></div>
         <div className="story-grid reveal">
           <div className="portrait-frame">
-            <div className="portrait-photo"><Image src="/thomas-shelby-hero.jpg" alt="Cinematic portrait" fill sizes="(max-width: 700px) 80vw, 35vw" /></div>
-            <p><b><FingerprintIcon /> Verified</b><span>Computer Science Engineer<br />Bengaluru, India</span></p>
+            <div className="portrait-photo">
+              <Image className="portrait-img" src="/baradwaj_image.jpeg" alt="Portrait of Bharadwaj B R" fill sizes="(max-width: 700px) 80vw, 35vw" />
+            </div>
+            <p><b><FingerprintIcon /> Verified</b><span>Developer &amp; Entrepreneur<br />Bengaluru, India</span></p>
             <div className="portrait-stamp"><Seal small /></div>
           </div>
           <div className="story-copy">
             <p className="eyebrow light">A little about me</p>
             <h2 id="story-title">Curiosity built<br /><em>the engineer.</em></h2>
-            <p className="lead">I am Bharadwaj, a computer science engineer who enjoys solving hard problems with a mix of code, design, and clear thinking.</p>
+            <p className="lead">I started out just curious — pulling things apart to see how they worked. That curiosity turned into a craft, and the craft turned into a career built one hard problem at a time.</p>
             <div className="story-columns">
               <p>My work moves between full-stack products and applied AI. I care about the details users notice and the engineering decisions they never have to see.</p>
               <p>Outside the editor, I explore emerging technology, sharpen my product instincts, and look for teams building work that matters.</p>
@@ -235,10 +185,32 @@ export default function Home() {
         <div className="section-index">Skills &amp; craft <span>Working arsenal</span></div>
         <div className="section-heading reveal">
           <p className="eyebrow">Capabilities</p>
-          <h2 id="skills-title">Tools of<br /><em>the trade.</em></h2>
+          <h2 id="skills-title">Technologies<br /><em>of the trade.</em></h2>
+        </div>
+        <div className="core-strip reveal" aria-label="Core technologies">
+          <div className="core-strip-label">Core stack</div>
+          <div className="core-strip-track">
+            <div className="core-strip-row ghost" aria-hidden="true">
+              {[...coreStack, ...coreStack].map((tech, i) => <span key={`ghost-${i}`}>{tech}<i /></span>)}
+            </div>
+            <div className="core-strip-row">
+              {[...coreStack, ...coreStack].map((tech, i) => <span key={`${tech}-${i}`}>{tech}<i /></span>)}
+            </div>
+          </div>
         </div>
         <div className="skill-grid reveal">
-          {skills.map(({ title, text, Icon }) => <article key={title}><div className="skill-mark"><Icon /></div><h3>{title}</h3><p>{text}</p><i /></article>)}
+          {skills.map(({ title, text, tags, featured, Icon }) => (
+            <article key={title} className={featured ? "skill-featured" : undefined}>
+              <div className="skill-mark"><Icon /></div>
+              <h3>{title}</h3>
+              <p>{text}</p>
+              {featured && <div className="skill-glow" aria-hidden="true" />}
+              <ul className="skill-tags">
+                {tags.map((tag) => <li key={tag} className={featured ? "tag-hot" : undefined}>{tag}</li>)}
+              </ul>
+              <i />
+            </article>
+          ))}
         </div>
       </section>
 
@@ -248,16 +220,10 @@ export default function Home() {
           <div><p className="eyebrow light">Confidential record</p><h2 id="projects-title">Selected<br /><em>operations.</em></h2></div>
           <p>Products built to learn, solve real problems, and create a measurable result.</p>
         </div>
-        <div className="project-grid">
-          {projects.map(({ name, type, description, tags, Icon }) => (
-            <article className="project-card reveal" key={name}>
-              <div className="card-top"><span>Case file</span><i>Declassified</i></div>
-              <div className="project-visual"><span className="visual-icon"><Icon /></span></div>
-              <div className="project-body"><p>{type}</p><h3>{name}</h3><div>{description}</div></div>
-              <ul>{tags.map((tag) => <li key={tag}>{tag}</li>)}</ul>
-              <a href="#contact" aria-label={`Discuss ${name}`}>View case file <Arrow /></a>
-            </article>
-          ))}
+        <ProjectGallery />
+        <div className="projects-footer">
+          <p>Three selected builds. More in the archive.</p>
+          <Link className="button paper-button more-projects-link" href="/projects">More projects <Arrow /></Link>
         </div>
       </section>
 
@@ -265,18 +231,34 @@ export default function Home() {
         <div className="section-index">Resume <span>Professional record</span></div>
         <div className="resume-layout reveal">
           <div><p className="eyebrow">Full account</p><h2 id="resume-title">The complete<br /><em>dossier.</em></h2></div>
-          <div className="resume-card"><span>Document / 2026</span><p>Education, experience, achievements, and the complete technical toolkit in one concise document.</p><div className="button muted-button" aria-disabled="true">Resume coming soon</div><small>PDF will be linked after the final file is provided.</small></div>
+          <div className="resume-card">
+            <span>Document / Resume</span>
+            <p>Education, experience, achievements, and the complete technical toolkit in one concise document.</p>
+            <a className="button resume-button" href="/resume%20%281%29.pdf" target="_blank" rel="noopener noreferrer" aria-label="View Bharadwaj's resume PDF (opens in a new tab)">View resume <Arrow /></a>
+            <small>PDF · Opens in a new tab</small>
+          </div>
           <Seal />
         </div>
       </section>
 
       <section className="contact dark-section" id="contact" aria-labelledby="contact-title">
         <div className="section-index">Let&apos;s connect <span>Open channel</span></div>
-        <div className="contact-content reveal">
-          <p className="eyebrow light">Have an idea?</p>
-          <h2 id="contact-title">Let&apos;s build<br /><em>something bold.</em></h2>
-          <a className="email" href="mailto:bharadwajbhadraroy@gmail.com">bharadwajbhadraroy@gmail.com <Arrow /></a>
-          <div className="contact-links"><a href="https://github.com/Bharadwaj-2024/" target="_blank" rel="noreferrer">GitHub ↗</a><a href="https://www.linkedin.com/in/bharadwaj-bhadra-roy-526927325/" target="_blank" rel="noreferrer">LinkedIn ↗</a></div>
+        <div className="contact-layout">
+          <div className="contact-content reveal">
+            <p className="eyebrow light">Have an idea?</p>
+            <h2 id="contact-title">Let&apos;s build<br /><em>something bold.</em></h2>
+            <a className="email" href="mailto:bharadwajbhadraroy@gmail.com">bharadwajbhadraroy@gmail.com <Arrow /></a>
+            <div className="contact-links">
+              <a href="https://github.com/Bharadwaj-2024/" target="_blank" rel="noopener noreferrer" aria-label="GitHub (opens in a new tab)">GitHub <span aria-hidden="true">↗</span></a>
+              <a href="https://www.linkedin.com/in/bharadwaj-bhadra-roy-526927325/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn (opens in a new tab)">LinkedIn <span aria-hidden="true">↗</span></a>
+              <a href="https://x.com/BhadraBsr" target="_blank" rel="noopener noreferrer" aria-label="X (opens in a new tab)">X <span aria-hidden="true">↗</span></a>
+            </div>
+          </div>
+          <figure className="contact-art reveal">
+            <div className="contact-photo">
+              <Image className="contact-image" src="/peaky%20blinders_grop.png" alt="Three figures in Peaky Blinders style walking together along a lamplit street" fill sizes="(max-width: 980px) 90vw, 43vw" />
+            </div>
+          </figure>
         </div>
         <footer><span>© 2026 Bharadwaj B R</span><a href="#home">Back to top ↑</a><span>Built with purpose</span></footer>
       </section>

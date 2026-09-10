@@ -1,0 +1,10 @@
+.playerSpace { height: calc(4.5rem + env(safe-area-inset-bottom, 0px)); }
+.toggle { position: fixed; z-index: 100; left: max(.85rem, env(safe-area-inset-left, 0px)); bottom: max(.85rem, env(safe-area-inset-bottom, 0px)); width: 2.75rem; height: 2.75rem; padding: 0; display: grid; place-items: center; border: 1px solid #a16150; border-radius: 50%; color: var(--paper-light); background: #171714f5; box-shadow: 0 4px 16px #0005; cursor: pointer; transition: background .2s, border-color .2s; }
+.toggle:hover { background: #38221c; border-color: #d48373; }
+.toggle:focus-visible { outline: 2px solid var(--paper-light); outline-offset: 4px; }
+.toggle > svg { color: #e0a18f; }
+.toggle[data-playing="true"]::after { content: ""; position: absolute; bottom: 5px; right: 5px; width: 5px; height: 5px; border-radius: 50%; background: #e0a18f; box-shadow: 0 0 0 2px var(--ink); }
+.label { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; border: 0; }
+@media (prefers-reduced-motion: reduce) {
+  .toggle { transition: none; }
+}
